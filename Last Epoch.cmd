@@ -2,7 +2,7 @@
 setlocal
 
 :: ============================================================================
-:: Last Epoch Save Manager - v2.5 (Added "Backup Only" option)
+:: Last Epoch Save Manager - v2.1
 :: ============================================================================
 :: This script automates the process of backing up saves, launching the game
 :: to bypass the "save file exists" bug, and then restoring the saves.
