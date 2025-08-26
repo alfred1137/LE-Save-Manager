@@ -84,6 +84,8 @@ set "PLANNER_EXE_PATH=C:\Path\To\Your\Planner\Last Epoch Planner.exe"
 
 ## Changelog
 
+**v2.2 (2025-08-26)** - Implement backup count and latest backup timestamp display in the Last Epoch save manager's main menu. Clarify instructions in the game launch section for better user guidance.
+
 **v2.1 (2025-08-25)** - ***FIRST COMMIT TO GITHUB*** This update added a "Backup Only" option for more flexibility and improved the menu flow. It also fixed critical bugs related to locale-specific timestamps and special character handling in the menu display, making the script significantly more robust.
 
 **v2.0 (2025-08-24)** - This major version introduced a true timestamped backup system to prevent overwriting old saves and a multi-option menu for better control. It also modernized the script by replacing `xcopy` with the more reliable `robocopy`, improved the save restore logic, and centralized configuration paths for easier setup.
@@ -100,7 +102,7 @@ set "PLANNER_EXE_PATH=C:\Path\To\Your\Planner\Last Epoch Planner.exe"
 
 ## TO DO LIST
 
-- [ ] Make script history persist even after moving into a next stage
-- [ ] Show numbers of backups and last back up datetime on launch
+- [X] Make script history persist even after moving into a next stage
+- [X] Show numbers of backups and last back up datetime on launch
 - [ ] Let user choose which version to restore instead of forcing to restore the latest
 - [ ] An option to delete older backups

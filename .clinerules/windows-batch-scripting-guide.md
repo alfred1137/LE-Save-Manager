@@ -62,7 +62,47 @@ set "TIMESTAMP=%YYYY%-%MM%-%DD%_%HH%-%MIN%-%SS%"
 ```
 This pattern is robust and should be used for all timestamping needs.
 
-## 3. General Best Practices
+## 3. Counting Files and Directories Reliably
+
+Avoid parsing the output of the `dir` command, as its output format can change based on user locale. The most reliable method is to use a `for` loop with a counter variable.
+
+**Implementation Pattern (Counting Directories):**
+```batch
+set "count=0"
+for /d %%d in ("C:\Path\To\Your\Directory\*") do (
+    set /a count+=1
+)
+echo Total directories found: %count%
+```
+- Use `for /d` to iterate over directories.
+- Use `for` (without `/d`) to iterate over files.
+
+## 4. String Manipulation and Substrings
+
+Batch scripting supports extracting substrings from variables, which is extremely useful for parsing structured strings like timestamps.
+
+**Syntax:** `%VARIABLE:~start,length%`
+- `start`: The zero-based starting index.
+- `length`: The number of characters to extract.
+
+**Implementation Pattern (Parsing a Timestamp):**
+This example parses a timestamp from a string in the format `YYYY-MM-DD_HH-MIN-SS`.
+
+```batch
+set "TIMESTAMP_STRING=2025-08-25_11-51-29"
+
+REM Extract the date part (10 characters from the start)
+set "DATE_PART=%TIMESTAMP_STRING:~0,10%"
+
+REM Extract the time part, replacing hyphens with colons
+set "TIME_PART=%TIMESTAMP_STRING:~11,2%:%TIMESTAMP_STRING:~14,2%:%TIMESTAMP_STRING:~17,2%"
+
+echo Original: %TIMESTAMP_STRING%
+echo Date: %DATE_PART%
+echo Time: %TIME_PART%
+```
+
+## 5. General Best Practices
 
 -   **Use `setlocal`**: Always start scripts with `@echo off` and `setlocal`. This prevents variables from leaking into the user's global command prompt environment.
 -   **Use `robocopy` for File/Directory Operations**: `robocopy` is the modern, reliable replacement for `xcopy` and `copy`. It has better error handling, retry logic, and is more resilient.

@@ -2,7 +2,7 @@
 setlocal
 
 :: ============================================================================
-:: Last Epoch Save Manager - v2.1
+:: Last Epoch Save Manager - v2.2
 :: ============================================================================
 :: This script automates the process of backing up saves, launching the game
 :: to bypass the "save file exists" bug, and then restoring the saves.
@@ -21,12 +21,33 @@ set "GAME_LAUNCH_ARGS=--offline"
 
 
 :main_menu
-cls
 title Last Epoch Save Manager
 color 0B
+cls
 echo ===========================================
 echo         Last Epoch Save Manager
 echo ===========================================
+
+REM --- Display number of backups and last backup time ---
+set "backup_count=0"
+if exist "%BACKUP_ROOT%" (
+    for /d %%d in ("%BACKUP_ROOT%\*") do (
+        set /a backup_count+=1
+    )
+)
+
+echo.
+echo   Backups Found: %backup_count%
+for /f "delims=" %%d in ('dir "%BACKUP_ROOT%" /b /ad /o-d') do (
+        set "LATEST_BACKUP_NAME=%%d"
+        goto :found_latest_backup_name_main
+    )
+    :found_latest_backup_name_main
+    set "DATE_PART=%LATEST_BACKUP_NAME:~0,10%"
+    set "TIME_PART=%LATEST_BACKUP_NAME:~11,2%:%LATEST_BACKUP_NAME:~14,2%:%LATEST_BACKUP_NAME:~17,2%"
+    echo   Last Backup:   %DATE_PART% %TIME_PART%
+echo.
+echo -------------------------------------------
 echo.
 echo   [1] Full Process ^(Backup / Launch / Restore^)
 echo   [2] Backup Saves Only
@@ -63,7 +84,6 @@ pause
 goto main_menu
 
 :backup_saves
-cls
 echo ===========================================
 echo         Part 1: Backing Up Saves
 echo ===========================================
@@ -126,13 +146,12 @@ echo.
 goto :eof
 
 :launch_games
-cls
 echo ===========================================
 echo         Part 2: Launching Games
 echo ===========================================
 echo.
 echo The script will now launch the game and planner.
-echo After you are finished playing and have closed Last Epoch,
+echo Once the launch is complete, 
 echo come back to this window to restore your saves.
 echo.
 echo Press any key to launch the game...
@@ -150,8 +169,8 @@ echo.
 echo [SUCCESS] Game has been launched.
 echo.
 echo =================================================================
-echo   IMPORTANT: Play the game. When you are done, close the game
-echo   and then press a key in this window to restore your saves.
+echo   IMPORTANT: The game should now launch into character creation,
+echo   and press a key in this window to restore your saves.
 echo =================================================================
 echo.
 pause >nul
@@ -159,7 +178,6 @@ goto :eof
 
 
 :restore_saves
-cls
 echo ===========================================
 echo         Part 3: Restoring Saves
 echo ===========================================
@@ -206,12 +224,12 @@ explorer "%SAVES_PARENT_DIR%"
 goto main_menu
 
 :end_script
-cls
 echo ===========================================
 echo           Script Finished
 echo ===========================================
 echo.
-echo All selected tasks are complete.
+echo All selected tasks are complete. 
+echo You may now reload the game by returning to character screen.
 echo.
 echo Press any key to close this window...
 pause >nul
