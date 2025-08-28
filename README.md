@@ -1,14 +1,14 @@
 # Last Epoch Save Manager
 
-A comprehensive command-line utility for Windows designed to manage "Last Epoch" save files. This script provides a robust workaround for a common game launch bug while offering powerful backup and restore features.
+A command-line utility for Windows designed to manage "Last Epoch" save files. This script provides a workaround for a common bug when launching with mods; while offering adequate save backup and restore features.
 
 ## The Problem
 
-The game "Last Epoch" can fail to launch if a `Saves` folder is already present in its `AppData` directory. This forces players into a tedious and error-prone manual process: moving the save folder before launching the game, and then restoring it after playing.
+The game "Last Epoch" can fail to launch with mods if a `Saves` folder is already present in its `AppData\LocalLow\Eleventh Hour Games\Last Epoch` directory. This forces players into a tedious and error-prone manual process: moving the save folder before launching the game, and then restoring it after the game is launched in order to resume player progress.
 
 ## The Solution
 
-This script automates the entire workflow. It provides a simple, menu-driven interface to safely back up your saves, prepare the directory for a clean game launch, and then reliably restore your most recent save data after your session. It's designed to be robust, user-friendly, and safe.
+This script automates the entire workflow. It provides a simple, menu-driven interface to safely back up your saves, prepare the directory for a clean game launch, and then reliably restore your most recent save data when you are ready to play.
 
 ---
 
@@ -40,7 +40,7 @@ The script's logic is designed to be safe and to directly address the game's lau
 
 2. **Launch (`:launch_games`)**:
     - The script launches `Last Epoch.exe` with the `--offline` argument.
-    - It then pauses and waits for you to finish your gaming session. The script does not proceed until you return to the command window and press a key.
+    - It then pauses and waits for you to confirm if the game is launched successfully. The script does not proceed until you return to the command window and press a key.
 
 3. **Restore (`:restore_saves`)**:
     - The script automatically finds the most recent backup by sorting the backup folders by date.
@@ -61,7 +61,7 @@ set "GAME_EXE_PATH=C:\Path\To\Your\Game\Last Epoch.exe"
 set "PLANNER_EXE_PATH=C:\Path\To\Your\Planner\Last Epoch Planner.exe"
 ```
 
-- `SAVES_PARENT_DIR`: The path to the Last Epoch folder in your `AppData\LocalLow`. **Remember to replace `YOUR_USERNAME` with your actual Windows username**.
+- `SAVES_PARENT_DIR`: The path to the Last Epoch folder in your `AppData\LocalLow` (fast travel there with Win+R and then `%localappdata%low`). **Remember to replace `YOUR_USERNAME` with your actual Windows username**.
 - `GAME_EXE_PATH`: The full path to the `Last Epoch.exe` file.
 - `PLANNER_EXE_PATH`: (Optional) The full path to the `Last Epoch Planner.exe`. If you don't use the planner, the script will simply skip launching it.
 
